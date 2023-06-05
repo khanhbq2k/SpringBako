@@ -1,0 +1,6 @@
+val:
+  mysql:
+    clazz:
+      url: "13.229.82.217:11020"
+      username: "root"
+      password: "root@VPD@123"

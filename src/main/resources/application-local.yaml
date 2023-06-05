@@ -1,0 +1,9 @@
+server:
+  port: 8088
+
+logging:
+  config: src/main/resources/logback-local.xml
+
+val.mysql.clazz.url: "10.1.0.15:3306"
+val.mysql.clazz.username: "root"
+val.mysql.clazz.password: "j4NELjfIT0vCo39Fi5m1m"

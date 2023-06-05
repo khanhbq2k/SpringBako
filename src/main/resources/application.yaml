@@ -1,0 +1,25 @@
+server:
+  port: 8088
+  servlet:
+    context-path: '/bako'
+timezone:
+  default: Asia/Ho_Chi_Minh
+user:
+  timezone: Asia/Ho_Chi_Minh
+spring:
+  application:
+    name: class-management-system
+  profiles:
+    include: database
+    active: local
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 30000
+        read-timeout: 60000

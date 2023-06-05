@@ -1,0 +1,111 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.5'
+    id "io.spring.dependency-management" version '1.1.0'
+    id 'jacoco'
+}
+
+group 'org.example'
+version '0.1.1'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+def mavenUsername = System.getenv("MAVEN_USERNAME") ?: "_json_key"
+def mavenPassword = System.getenv("MAVEN_PASSWORD")
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url "https://asia-east2-maven.pkg.dev/the-school-vn-6868/mfn-elearning-p-atr-asea2-sharedmavencenter-01-release"
+        credentials {
+            username = mavenUsername
+            password = mavenPassword
+        }
+        authentication {
+            basic(BasicAuthentication)
+        }
+    }
+}
+
+compileJava { options.encoding = "UTF-8" }
+
+ext {
+    springCloud = "2021.0.5"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloud}"
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs = [
+            "-Amapstruct.suppressGeneratorTimestamp=true"
+    ]
+}
+
+dependencies {
+
+    implementation 'org.codehaus.janino:janino:3.1.6'
+
+    implementation project(':common')
+    implementation project(':course')
+}
+
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: "jacoco"
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url "https://asia-east2-maven.pkg.dev/the-school-vn-6868/mfn-elearning-p-atr-asea2-sharedmavencenter-01-release"
+            credentials {
+                username = mavenUsername
+                password = mavenPassword
+            }
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+    }
+
+    compileJava { options.encoding = "UTF-8" }
+    configurations {
+        compile.exclude module: "spring-boot-starter-tomcat"
+    }
+
+    dependencies {
+        implementation "com.mfa.framework:mfa-framework:0.0.7"
+        implementation "com.mfa.framework:mvc:0.0.4"
+
+        implementation 'mysql:mysql-connector-java:5.1.47'
+        implementation 'com.vladmihalcea:hibernate-types-55:2.21.1'
+        implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.9'
+        implementation 'org.modelmapper:modelmapper:3.1.1'
+
+        annotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
+        annotationProcessor "org.projectlombok:lombok:1.18.24"
+        annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+
+        implementation 'com.google.guava:guava:31.1-jre'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+subprojects {
+    compileJava { options.encoding = "UTF-8" }
+
+    dependencies {
+    }
+}

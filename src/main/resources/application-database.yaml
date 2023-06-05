@@ -1,0 +1,33 @@
+spring:
+  jpa:
+    properties:
+      # alternate auto config hibernate properties
+      hibernate:
+        ddl-auto: none
+        physical_naming_strategy: com.vladmihalcea.hibernate.naming.CamelCaseToSnakeCaseNamingStrategy
+        jdbc:
+          batch_size: 10
+        order_inserts: true
+        order_updates: true
+        query:
+          plan_cache_max_size: 64
+          plan_parameter_metadata_max_size: 32
+          in_clause_parameter_padding: true
+        dialect: org.hibernate.dialect.MySQL57Dialect
+        dialect.storage_engine: innodb
+    show-sql: false
+    open-in-view: false
+
+  # CONNECT DATABASE-----------------------------------------------------------------
+  datasource:
+    url: jdbc:mysql://${val.mysql.clazz.url}/lms?useTimezone=true&serverTimezone=Asia/Ho_Chi_Minh&useLegacyDatetimeCode=false&useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+    username: ${val.mysql.clazz.username}
+    password: ${val.mysql.clazz.password}
+    maximum-pool-size: 5
+    minimum-idle: 1
+    max-lifetime: 7200000
+
+# Default configuration values
+val.mysql.clazz.url: "10.1.0.5:3306"
+val.mysql.clazz.username: "root"
+val.mysql.clazz.password: "j4NELjfIT0vCo39Fi5m1m"
